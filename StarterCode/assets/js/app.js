@@ -53,7 +53,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
   chartGroup.append("g")
     .call(leftAxis);
 
-  // Create circles and add state abbreviations
+  // circles and state abbreviations
   var circlesGroup = chartGroup.selectAll("circle")
     .data(data)
     .enter()
@@ -83,7 +83,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
       return data.abbr
     });
 
-  // Initialize tool tip
+  // tool tips
   var toolTip = d3.tip()
     .attr("class", "tooltip")
     .offset([80, -60])
@@ -91,24 +91,21 @@ d3.csv("assets/data/data.csv").then(function(data) {
       return (`${d.state}<br>In Poverty (%): ${d.poverty}<br>Lacks Healthcare (%): ${d.healthcare}`)
     });
 
-  // Create tooltip in the chart
   chartGroup.call(toolTip);
 
-  // Create event listeners to display and hide the tooltip
   circlesGroup.on("mouseover", function(data) {
     toolTip.show(data, this)
       d3.select(this)
         .attr("fill", "red");
   })
 
-  // Mouseout
   .on("mouseout", function(data, index) {
     toolTip.hide(data)
       d3.select(this)
         .attr("fill", "purple");
   });
 
-  // Create axes labels
+  // labels
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left + 40)
